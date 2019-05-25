@@ -1,0 +1,38 @@
+{
+  "name": "imbue/sendcloud-api-php",
+  "description": "SendCloud API client library for PHP. SendCloud is a European shipping software for e-commerce.",
+  "keywords": [
+    "sendcloud",
+    "php",
+    "shipping",
+    "shipping software"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/imbue/sendcloud-api-php",
+  "authors": [
+    {
+      "name": "Liam Boer",
+      "email": "liam.boer@outlook.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7 || ^6.5 || ^7.1"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Imbue\\SendCloud\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
+    }
+  }
+}
