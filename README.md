@@ -3,6 +3,7 @@
 <img src="https://i.imgur.com/kEZU7HH.png" />
 
 [![Build Status](https://travis-ci.org/imbue/sendcloud-api-php.svg?branch=master)](https://travis-ci.org/imbue/sendcloud-api-php)
+[![Downloads](https://img.shields.io/packagist/dt/imbue/sendcloud-api-php.svg)](https://https://packagist.org/packages/imbue/sendcloud-api-php)
 
 > Note that this library does not yet implement the complete functionality of the SendCloud API. Feel free to open a merge request with the additional implementation.
 
@@ -75,18 +76,64 @@ $shipment = $sendCloud->integrationShipments->upsert(1346, [
 ]);
 ```
 
+Retrieve a list of integrations
+
+```php
+$sendCloud->integrations->list();
+```
+
+Retrieve a single parcel
+```php
+$sendCloud->parcels->get($id);
+```
+
 ##### Partner ID
 
-Set the Partner ID
+If you are a partner of SendCloud, you can set the `partner id`. The library will ensure it will be added as header to the request.
 
 ```php
 $sendCloud->setPartnerId('3dd88a04-26e4-4959-af11-f5674491573e')
 ```
 
+
+## List of available methods
+
+### Integrations
+- List
+
+### Integration Shipments
+- List
+- Upsert (Update or create)
+
+### Invoices
+- List
+- Find
+
+### Parcels
+- Get
+- List
+- Create
+
+### Parcel statuses
+- List
+
+### Sender addresses
+- Get
+- List
+
+### Shipping methods
+- Get
+- List
+
+### User
+- Get
+
+
 ## Roadmap
 
 - Implement all possible endpoints [ ]
 - Add PHPUnit tests [ ]
+
 
 ## Want to help improving the library?
 
