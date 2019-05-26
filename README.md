@@ -2,6 +2,8 @@
 
 <img src="https://i.imgur.com/kEZU7HH.png" />
 
+[![Build Status](https://travis-ci.org/imbue/sendcloud-api-php.svg?branch=master)](https://travis-ci.org/imbue/sendcloud-api-php)
+
 > Note that this library does not yet implement the complete functionality of the SendCloud API. Feel free to open a merge request with the additional implementation.
 
 ## Installation
@@ -80,6 +82,11 @@ Set the Partner ID
 ```php
 $sendCloud->setPartnerId('3dd88a04-26e4-4959-af11-f5674491573e')
 ```
+
+## Roadmap
+
+- Implement all possible endpoints [ ]
+- Add PHPUnit tests [ ]
 
 ## Want to help improving the library?
 
