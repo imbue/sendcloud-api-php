@@ -3,7 +3,7 @@
 namespace Imbue\SendCloud\Endpoints;
 
 use Imbue\SendCloud\Exceptions\ApiException;
-use Imbue\SendCloud\Resources\Collections\AbstractCollection;
+use Imbue\SendCloud\Resources\Collections\IntegrationCollection;
 use Imbue\SendCloud\Resources\Integration;
 
 class IntegrationEndpoint extends AbstractEndpoint
@@ -20,11 +20,19 @@ class IntegrationEndpoint extends AbstractEndpoint
     }
 
     /**
-     * @return array|AbstractCollection
+     * @return IntegrationCollection
+     */
+    protected function getResourceCollectionObject(): IntegrationCollection
+    {
+        return new IntegrationCollection();
+    }
+
+    /**
+     * @return IntegrationCollection
      * @throws ApiException
      */
     public function list()
     {
-        return $this->restList();
+        return $this->restList([]);
     }
 }

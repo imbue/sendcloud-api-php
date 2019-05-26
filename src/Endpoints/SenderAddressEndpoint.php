@@ -13,6 +13,9 @@ class SenderAddressEndpoint extends AbstractEndpoint
     /** @var string */
     protected $resourcePath = 'user/addresses/sender';
 
+    /** @var string */
+    protected $singleResourceKey = 'sender_address';
+
     /**
      * @return SenderAddress
      */

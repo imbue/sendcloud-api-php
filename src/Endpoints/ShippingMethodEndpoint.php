@@ -12,6 +12,8 @@ class ShippingMethodEndpoint extends AbstractEndpoint
 {
     /** @var string */
     protected $resourcePath = 'shipping_methods';
+    /** @var string */
+    protected $singleResourceKey = 'shipping_method';
 
     /**
      * @return mixed
@@ -45,7 +47,7 @@ class ShippingMethodEndpoint extends AbstractEndpoint
      * @return array|AbstractCollection
      * @throws ApiException
      */
-    public function list($filters)
+    public function list(array $filters = [])
     {
         return $this->restList($filters);
     }

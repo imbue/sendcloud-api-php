@@ -22,6 +22,10 @@ abstract class AbstractEndpoint
     /** @var string */
     protected $resourcePath;
     /** @var string */
+    protected $singleResourceKey;
+    /** @var string */
+    protected $listResourceKey;
+    /** @var string */
     protected $parentId;
 
     /**
@@ -43,15 +47,6 @@ abstract class AbstractEndpoint
             return '';
         }
 
-        foreach ($filters as $key => $value) {
-            if ($value === true) {
-                $filters[$key] = 'true';
-            }
-            if ($value === false) {
-                $filters[$key] = 'false';
-            }
-        }
-
         return '?' . http_build_query($filters, '', '&');
     }
 
@@ -68,7 +63,7 @@ abstract class AbstractEndpoint
             $this->parseRequestBody($body)
         );
 
-        return ResourceFactory::createFromApiResult($result, $this->getResourceObject());
+        return ResourceFactory::createFromApiResult($result, $this->getResourceObject(), $this->getSingleResourceKey());
     }
 
     /**
@@ -77,7 +72,7 @@ abstract class AbstractEndpoint
      * @return AbstractResource
      * @throws ApiException
      */
-    protected function restRead($id, array $filters)
+    protected function restRead($id, array $filters): AbstractResource
     {
         if (empty($id)) {
             throw new ApiException('Invalid resource id.');
@@ -90,7 +85,7 @@ abstract class AbstractEndpoint
             "{$this->getResourcePath()}/{$id}" . $this->buildQueryString($filters)
         );
 
-        return ResourceFactory::createFromApiResult($result, $this->getResourceObject());
+        return ResourceFactory::createFromApiResult($result, $this->getResourceObject(), $this->getSingleResourceKey());
     }
 
     /**
@@ -99,7 +94,7 @@ abstract class AbstractEndpoint
      * @return AbstractResource|null
      * @throws ApiException
      */
-    protected function restDelete($id, array $body = [])
+    protected function restDelete($id, array $body = []): AbstractResource
     {
         if (empty($id)) {
             throw new ApiException('Invalid resource id.');
@@ -122,10 +117,10 @@ abstract class AbstractEndpoint
 
     /**
      * @param array $filters
-     * @return array|AbstractCollection
+     * @return AbstractCollection
      * @throws ApiException
      */
-    protected function restList(array $filters = [])
+    protected function restList(array $filters = []): AbstractCollection
     {
         $apiPath = $this->getResourcePath();
 
@@ -135,33 +130,29 @@ abstract class AbstractEndpoint
 
         $result = $this->client->performHttpCall(self::REST_LIST, $apiPath);
 
-        $collection = null;
+        $previous = null;
+        $next = null;
+
+        if (isset($result->previous)) {
+            $previous = $result->previous;
+        }
+
+        if (isset($result->next)) {
+            $next = $result->next;
+        }
+
+        /** @var AbstractCollection $collection */
+        $collection = $this->getResourceCollectionObject(
+            $previous,
+            $next
+        );
 
         if (is_object($result)) {
-            $previous = null;
-            $next = null;
+            $result = $result->{$collection->getCollectionResourceName()};
+        }
 
-            if (isset($result->previous)) {
-                $previous = $result->previous;
-            }
-
-            if (isset($result->next)) {
-                $next = $result->next;
-            }
-
-            /** @var AbstractCollection $collection */
-            $collection = $this->getResourceCollectionObject(
-                $previous,
-                $next
-            );
-
-            foreach ($result->{$collection->getCollectionResourceName()} as $dataResult) {
-                $collection[] = ResourceFactory::createFromApiResult($dataResult, $this->getResourceObject());
-            }
-        } else {
-            foreach ($result as $dataResult) {
-                $collection[] = ResourceFactory::createFromApiResult($dataResult, $this->getResourceObject());
-            }
+        foreach ($result as $dataResult) {
+            $collection[] = ResourceFactory::createFromApiResult($dataResult, $this->getResourceObject());
         }
 
         return $collection;
@@ -197,6 +188,22 @@ abstract class AbstractEndpoint
     }
 
     /**
+     * @return string
+     */
+    protected function getSingleResourceKey()
+    {
+        return $this->singleResourceKey;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getListResourceKey()
+    {
+        return $this->listResourceKey;
+    }
+
+    /**
      * @param array $body
      * @return null|string
      * @throws ApiException
@@ -206,8 +213,9 @@ abstract class AbstractEndpoint
         if (empty($body)) {
             return null;
         }
+
         try {
-            $encoded = json_encode($body);
+            $encoded = \GuzzleHttp\json_encode($body);
         } catch (InvalidArgumentException $e) {
             throw new ApiException("Error encoding parameters into JSON: '" . $e->getMessage() . "'");
         }

@@ -11,6 +11,8 @@ class UserEndpoint extends AbstractEndpoint
 {
     /** @var string */
     protected $resourcePath = 'user';
+    /** @var string */
+    protected $singleResourceKey = 'user';
 
     /**
      * @return User
@@ -30,6 +32,6 @@ class UserEndpoint extends AbstractEndpoint
             self::REST_READ,
             $this->getResourcePath()
         );
-        return ResourceFactory::createFromApiResult($result, $this->getResourceObject());
+        return ResourceFactory::createFromApiResult($result, $this->getResourceObject(), $this->getSingleResourceKey());
     }
 }

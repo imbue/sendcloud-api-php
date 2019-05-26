@@ -3,7 +3,6 @@
 namespace Imbue\SendCloud\Endpoints;
 
 use Imbue\SendCloud\Exceptions\ApiException;
-use Imbue\SendCloud\Resources\Collections\AbstractCollection;
 use Imbue\SendCloud\Resources\Collections\ParcelCollection;
 use Imbue\SendCloud\Resources\Parcel;
 
@@ -11,6 +10,8 @@ class ParcelEndpoint extends AbstractEndpoint
 {
     /** @var string */
     protected $resourcePath = 'parcels';
+    /** @var string */
+    protected $singleResourceKey = 'parcel';
 
     /**
      * @return Parcel
@@ -31,11 +32,31 @@ class ParcelEndpoint extends AbstractEndpoint
     }
 
     /**
-     * @return array|AbstractCollection
+     * @param $id
+     * @return Parcel
+     * @throws ApiException
+     */
+    public function get($id)
+    {
+        return $this->restRead($id, []);
+    }
+
+    /**
+     * @return ParcelCollection
      * @throws ApiException
      */
     public function list()
     {
         return $this->restList();
+    }
+
+    /**
+     * @param array $data
+     * @return Parcel
+     * @throws ApiException
+     */
+    public function create(array $data = [])
+    {
+        return $this->restCreate($data);
     }
 }

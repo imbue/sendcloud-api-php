@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use function GuzzleHttp\Psr7\stream_for;
 use GuzzleHttp\RequestOptions;
 use Imbue\SendCloud\Endpoints\IntegrationEndpoint;
 use Imbue\SendCloud\Endpoints\IntegrationShipmentEndpoint;
@@ -20,8 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class SendCloudApiClient
 {
-    public const CLIENT_VERSION = '1.0.0';
-//    public const API_ENDPOINT = 'http://requestbin.fullcontact.com/16x6p191';
+    public const CLIENT_VERSION = '0.1.0';
     public const API_ENDPOINT = 'https://panel.sendcloud.sc/api';
     public const API_VERSION = 'v2';
 
@@ -122,6 +122,14 @@ class SendCloudApiClient
     }
 
     /**
+     * @param string $partnerId
+     */
+    public function setPartnerId(string $partnerId): void
+    {
+        $this->partnerId = $partnerId;
+    }
+
+    /**
      * @param $versionString
      * @return $this
      */
@@ -161,6 +169,7 @@ class SendCloudApiClient
 
         $headers = [
             'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
             'Authorization' => "Basic {$this->getBasicToken()}",
             'User-Agent' => $userAgent,
         ];

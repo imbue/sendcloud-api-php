@@ -3,7 +3,7 @@
 namespace Imbue\SendCloud\Endpoints;
 
 use Imbue\SendCloud\Exceptions\ApiException;
-use Imbue\SendCloud\Resources\Collections\AbstractCollection;
+use Imbue\SendCloud\Resources\Collections\ParcelStatusCollection;
 use Imbue\SendCloud\Resources\ParcelStatus;
 
 class ParcelStatusEndpoint extends AbstractEndpoint
@@ -20,7 +20,15 @@ class ParcelStatusEndpoint extends AbstractEndpoint
     }
 
     /**
-     * @return array|AbstractCollection
+     * @return ParcelStatusCollection
+     */
+    protected function getResourceCollectionObject(): ParcelStatusCollection
+    {
+        return new ParcelStatusCollection();
+    }
+
+    /**
+     * @return ParcelStatusCollection
      * @throws ApiException
      */
     public function list()

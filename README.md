@@ -2,6 +2,8 @@
 
 <img src="https://i.imgur.com/kEZU7HH.png" />
 
+> Note that this library does not yet implement the complete functionality of the SendCloud API. Feel free to open a merge request with the additional implementation.
+
 ## Installation
 
 ```
@@ -26,8 +28,33 @@ $sendCloud->setApiAuth('gb3iogpp8uf74p92holav67ij7jmpswe', '1m9mtv4ylnd8fy0xb61u
 Creating a new parcel
 
 ```php
-$payment = $sendcloud->parcels->create([
-    'name'  => 'Julie Appleseed',
+$parcel = $sendCloud->parcels->create([
+    'parcel' => [
+        'name' => 'Julie Appleseed',
+        'company_name' => 'SendCloud',
+        'address' => 'Insulindelaan 115',
+        'house_number' => 115,
+        'city' => 'Eindhoven',
+        'postal_code' => '5642CV',
+        'telephone' => '+31612345678',
+        'request_label' => true,
+        'email' => 'julie@appleseed.com',
+        'country' => 'NL',
+        'shipment' => [
+            'id' => 8,
+        ],
+        'weight' => '10.000',
+        'order_number' => '1234567890',
+        'insured_value' => 2000,
+    ]
+]);
+```
+
+Insert or update (upsert) shipment for an integration
+
+```php
+$shipment = $sendCloud->integrationShipments->upsert(1346, [
+    'name' => 'Julie Appleseed',
     'company_name' => 'SendCloud',
     'address' => 'Insulindelaan 115',
     'house_number' => 115,
@@ -45,3 +72,15 @@ $payment = $sendcloud->parcels->create([
     'insured_value' => 2000,
 ]);
 ```
+
+##### Partner ID
+
+Set the Partner ID
+
+```php
+$sendCloud->setPartnerId('3dd88a04-26e4-4959-af11-f5674491573e')
+```
+
+## Want to help improving the library?
+
+I will happily accept new [pull requests](https://github.com/imbue/sendcloud-api-php/pulls).

@@ -1,6 +1,6 @@
 {
   "name": "imbue/sendcloud-api-php",
-  "description": "SendCloud API client library for PHP. SendCloud is a European shipping software for e-commerce.",
+  "description": "SendCloud API client library for PHP. SendCloud is a European shipping software for e-commerce",
   "keywords": [
     "sendcloud",
     "php",

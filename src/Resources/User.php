@@ -18,6 +18,8 @@ class User extends AbstractResource
     public $postal_code;
     /** @var string */
     public $company_logo;
+    /** @var string */
+    public $telephone;
     /** @var array */
     public $data;
     /** @var string */
