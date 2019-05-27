@@ -126,6 +126,11 @@ $sendCloud->setPartnerId('3dd88a04-26e4-4959-af11-f5674491573e')
 - Get
 - List
 
+### Labels
+- Get
+- Print
+- Get labels as PDF
+
 ### User
 - Get
 

@@ -6,11 +6,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
-use function GuzzleHttp\Psr7\stream_for;
 use GuzzleHttp\RequestOptions;
 use Imbue\SendCloud\Endpoints\IntegrationEndpoint;
 use Imbue\SendCloud\Endpoints\IntegrationShipmentEndpoint;
 use Imbue\SendCloud\Endpoints\InvoiceEndpoint;
+use Imbue\SendCloud\Endpoints\LabelEndpoint;
 use Imbue\SendCloud\Endpoints\ParcelEndpoint;
 use Imbue\SendCloud\Endpoints\ParcelStatusEndpoint;
 use Imbue\SendCloud\Endpoints\SenderAddressEndpoint;
@@ -21,7 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class SendCloudApiClient
 {
-    public const CLIENT_VERSION = '0.1.0';
+    public const CLIENT_VERSION = '0.2.0';
     public const API_ENDPOINT = 'https://panel.sendcloud.sc/api';
     public const API_VERSION = 'v2';
 
@@ -29,6 +29,9 @@ class SendCloudApiClient
     public const HTTP_POST = 'POST';
     public const HTTP_DELETE = 'DELETE';
     public const HTTP_PATCH = 'PATCH';
+
+    private const CONTENT_TYPE_JSON = 'application/json';
+    private const CONTENT_TYPE_PDF = 'application/pdf';
 
     /** @var int */
     private const TIMEOUT = 10;
@@ -55,7 +58,7 @@ class SendCloudApiClient
     public $parcelStatuses;
     /** @var ShippingMethodEndpoint */
     public $shippingMethods;
-    /** @var UserEndpoint */
+    /** @var LabelEndpoint */
     public $labels;
     /** @var InvoiceEndpoint */
     public $invoices;
@@ -96,7 +99,7 @@ class SendCloudApiClient
         $this->parcelStatuses = new ParcelStatusEndpoint($this);
         $this->shippingMethods = new ShippingMethodEndpoint($this);
         $this->senderAddresses = new SenderAddressEndpoint($this);
-        // $this->labels = new LabelEndpoint($this);
+        $this->labels = new LabelEndpoint($this);
         $this->invoices = new InvoiceEndpoint($this);
         $this->user = new UserEndpoint($this);
         $this->integrations = new IntegrationEndpoint($this);
@@ -168,8 +171,8 @@ class SendCloudApiClient
         $userAgent = implode(' ', $this->versionStrings);
 
         $headers = [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
+            'Accept' => self::CONTENT_TYPE_JSON,
+            'Content-Type' => self::CONTENT_TYPE_JSON,
             'Authorization' => "Basic {$this->getBasicToken()}",
             'User-Agent' => $userAgent,
         ];
@@ -214,6 +217,10 @@ class SendCloudApiClient
             throw new ApiException('No response body found.');
         }
 
+        if ($this->getContentTypeFromResponse($response) === self::CONTENT_TYPE_PDF) {
+            return $body;
+        }
+
         $object = @json_decode($body);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -233,5 +240,14 @@ class SendCloudApiClient
     private function getBasicToken(): string
     {
         return base64_encode("{$this->apiKey}:{$this->apiSecret}");
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return string
+     */
+    private function getContentTypeFromResponse(ResponseInterface $response)
+    {
+        return $response->getHeaderLine('Content-Type');
     }
 }
