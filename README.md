@@ -4,7 +4,8 @@
 
 [![Build Status](https://travis-ci.org/imbue/sendcloud-api-php.svg?branch=master)](https://travis-ci.org/imbue/sendcloud-api-php)
 [![Latest Stable Version](https://poser.pugx.org/imbue/sendcloud-api-php/v/stable)](https://packagist.org/packages/imbue/sendcloud-api-php)
-[![Downloads](https://img.shields.io/packagist/dt/imbue/sendcloud-api-php.svg)](https://https://packagist.org/packages/imbue/sendcloud-api-php)
+[![Downloads](https://img.shields.io/packagist/dt/imbue/sendcloud-api-php.svg)]
+(https://packagist.org/packages/imbue/sendcloud-api-php)
 
 > Note that this library does not yet implement the complete functionality of the SendCloud API. Feel free to open a merge request with the additional implementation.
 
