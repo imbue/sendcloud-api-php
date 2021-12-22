@@ -2,7 +2,7 @@
 
 <img src="https://i.imgur.com/8M1YeVx.png" />
 
-[![Build Status](https://travis-ci.org/imbue/sendcloud-api-php.svg?branch=master)](https://travis-ci.org/imbue/sendcloud-api-php)
+[![Tests](https://github.com/imbue/sendcloud-api-php/actions/workflows/test.yml/badge.svg)](https://github.com/imbue/sendcloud-api-php/actions/workflows/test.yml)
 [![Latest Stable Version](https://poser.pugx.org/imbue/sendcloud-api-php/v/stable)](https://packagist.org/packages/imbue/sendcloud-api-php)
 [![Downloads](https://img.shields.io/packagist/dt/imbue/sendcloud-api-php.svg)](https://packagist.org/packages/imbue/sendcloud-api-php)
 
@@ -11,13 +11,7 @@
 ## Installation
 
 ```
-$ composer require imbue/sendcloud-api-php:^0.1
-
-{
-    "require": {
-        "imbue/sendcloud-api-php": "^0.1"
-    }
-}
+$ composer require imbue/sendcloud-api-php
 ```
 
 ## Getting started
