@@ -87,7 +87,6 @@ class SendCloudApiClient
 
         $this->addVersionString('SendCloud/' . self::CLIENT_VERSION);
         $this->addVersionString('PHP/' . phpversion());
-        $this->addVersionString('Guzzle/' . ClientInterface::VERSION);
     }
 
     /**
