@@ -94,7 +94,7 @@ abstract class AbstractEndpoint
      * @return AbstractResource|null
      * @throws ApiException
      */
-    protected function restDelete($id, array $body = []): AbstractResource
+    protected function restDelete($id, array $body = []): ?AbstractResource
     {
         if (empty($id)) {
             throw new ApiException('Invalid resource id.');
