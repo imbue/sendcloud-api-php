@@ -15,7 +15,7 @@ class ApiClientTest extends TestCase
     /** @var SendCloudApiClient */
     private $sendCloudApiClient;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->guzzleClient = $this->createMock(Client::class);
