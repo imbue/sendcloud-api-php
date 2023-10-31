@@ -21,7 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class SendCloudApiClient
 {
-    public const CLIENT_VERSION = '0.2.0';
+    public const CLIENT_VERSION = '1.1.0';
     public const API_ENDPOINT = 'https://panel.sendcloud.sc/api';
     public const API_VERSION = 'v2';
 
