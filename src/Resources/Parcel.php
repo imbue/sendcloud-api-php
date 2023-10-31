@@ -78,4 +78,6 @@ class Parcel extends AbstractResource
     public $tracking_url;
     /** @var string */
     public $country_state;
+    /** @var int */
+    public $quantity;
 }
