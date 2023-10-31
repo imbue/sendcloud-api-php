@@ -15,6 +15,7 @@ use Imbue\SendCloud\Endpoints\ParcelEndpoint;
 use Imbue\SendCloud\Endpoints\ParcelStatusEndpoint;
 use Imbue\SendCloud\Endpoints\SenderAddressEndpoint;
 use Imbue\SendCloud\Endpoints\ShippingMethodEndpoint;
+use Imbue\SendCloud\Endpoints\ShippingProductsEndpoint;
 use Imbue\SendCloud\Endpoints\UserEndpoint;
 use Imbue\SendCloud\Exceptions\ApiException;
 use Psr\Http\Message\ResponseInterface;
@@ -58,6 +59,8 @@ class SendCloudApiClient
     public $parcelStatuses;
     /** @var ShippingMethodEndpoint */
     public $shippingMethods;
+    /** @var ShippingProductsEndpoint */
+    public $shippingProducts;
     /** @var LabelEndpoint */
     public $labels;
     /** @var InvoiceEndpoint */
@@ -97,6 +100,7 @@ class SendCloudApiClient
         $this->parcels = new ParcelEndpoint($this);
         $this->parcelStatuses = new ParcelStatusEndpoint($this);
         $this->shippingMethods = new ShippingMethodEndpoint($this);
+        $this->shippingProducts = new ShippingProductsEndpoint($this);
         $this->senderAddresses = new SenderAddressEndpoint($this);
         $this->labels = new LabelEndpoint($this);
         $this->invoices = new InvoiceEndpoint($this);
