@@ -2,7 +2,7 @@
 
 namespace Imbue\SendCloud\Resources;
 
-class ShippingProduct
+class ShippingProduct extends AbstractResource
 {
     /** @var string */
     public $name;
@@ -22,6 +22,6 @@ class ShippingProduct
     /** @var AvailableShippingFunctionality[] */
     public $available_functionalities;
 
-    /** @var ShippingMethod[] */
+    /** @var ShippingProductMethod[] */
     public $methods;
 }
