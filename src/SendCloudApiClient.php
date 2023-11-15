@@ -12,6 +12,7 @@ use Imbue\SendCloud\Endpoints\IntegrationShipmentEndpoint;
 use Imbue\SendCloud\Endpoints\InvoiceEndpoint;
 use Imbue\SendCloud\Endpoints\LabelEndpoint;
 use Imbue\SendCloud\Endpoints\ParcelEndpoint;
+use Imbue\SendCloud\Endpoints\ParcelMultiEndpoint;
 use Imbue\SendCloud\Endpoints\ParcelStatusEndpoint;
 use Imbue\SendCloud\Endpoints\SenderAddressEndpoint;
 use Imbue\SendCloud\Endpoints\ShippingMethodEndpoint;
@@ -55,6 +56,8 @@ class SendCloudApiClient
 
     /** @var ParcelEndpoint */
     public $parcels;
+    /** @var ParcelMultiEndpoint */
+    public $parcelsMulti;
     /** @var ParcelStatusEndpoint */
     public $parcelStatuses;
     /** @var ShippingMethodEndpoint */
@@ -98,6 +101,7 @@ class SendCloudApiClient
     public function initializeEndpoints()
     {
         $this->parcels = new ParcelEndpoint($this);
+        $this->parcelsMulti = new ParcelMultiEndpoint($this);
         $this->parcelStatuses = new ParcelStatusEndpoint($this);
         $this->shippingMethods = new ShippingMethodEndpoint($this);
         $this->shippingProducts = new ShippingProductsEndpoint($this);

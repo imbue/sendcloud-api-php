@@ -67,6 +67,36 @@ abstract class AbstractEndpoint
     }
 
     /**
+     * @param array $body
+     * @return AbstractCollection
+     * @throws ApiException
+     */
+    protected function restCreateCollection(array $body)
+    {
+        $result = $this->client->performHttpCall(
+            self::REST_CREATE,
+            $this->getResourcePath(),
+            $this->parseRequestBody($body)
+        );
+
+        /** @var AbstractCollection $collection */
+        $collection = $this->getResourceCollectionObject(
+            null,
+            null
+        );
+
+        if (is_object($result)) {
+            $result = $result->{$collection->getCollectionResourceName()};
+        }
+
+        foreach ($result as $dataResult) {
+            $collection[] = ResourceFactory::createFromApiResult($dataResult, $this->getResourceObject());
+        }
+
+        return $collection;
+    }
+
+    /**
      * @param       $id
      * @param array $filters
      * @return AbstractResource
