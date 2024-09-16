@@ -44,12 +44,13 @@ class ParcelEndpoint extends AbstractEndpoint
     }
 
     /**
+     * @param array $filters
      * @return ParcelCollection
      * @throws ApiException
      */
-    public function list()
+    public function list(array $filters = [])
     {
-        return $this->restList();
+        return $this->restList($filters);
     }
 
     /**
